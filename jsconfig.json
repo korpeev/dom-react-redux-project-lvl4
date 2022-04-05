@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "nodenext"
+    "module": "nodenext",
+    "baseUrl": "./src"
   }
 }
 

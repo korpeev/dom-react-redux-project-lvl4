@@ -7,6 +7,7 @@ const mode = process.env.NODE_ENV || 'development';
 
 module.exports = {
   mode,
+  entry: './src/index.js',
   resolve: {
     extensions: ['.js', '.jsx'],
   },
@@ -20,6 +21,11 @@ module.exports = {
     host: '0.0.0.0',
     // publicPath: '/assets/',
     historyApiFallback: true,
+  },
+  resolve: {
+    alias : {
+      '@': path.resolve(__dirname, './src')
+    }
   },
   plugins: [
     new MiniCssExtractPlugin(),
