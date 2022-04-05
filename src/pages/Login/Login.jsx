@@ -1,33 +1,70 @@
-import React from 'react';
-import { Formik, Form, Field } from 'formik';
+import React, { useEffect, useState } from 'react';
+import { Formik, Field, Form } from 'formik';
+import { useNavigate } from 'react-router-dom';
+import {
+  FormGroup, FormText, FormControl, FormLabel, Button,
+} from 'react-bootstrap';
 import classes from './style.module.scss';
 import { SignupSchema } from '../../utils/validationSchemas.js';
+import useAuth from '../../hooks/useAuth.js';
+import storage from '../../utils/storage.js';
 
 function Login() {
+  const { onSubmit, error: authError } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (storage.get('token')) {
+      navigate('/');
+    }
+  }, []);
   return (
     <div className={classes.formWrapper}>
-
       <Formik
+        validateOnBlur
         initialValues={{
-          login: '',
+          username: '',
           password: '',
         }}
         validationSchema={SignupSchema}
-        onSubmit={(values) => {
-          console.log(values);
+        onSubmit={async (values) => {
+          await onSubmit(values);
+          navigate('/');
         }}
       >
-        {({ errors, touched }) => (
+        {({
+          errors, touched, handleBlur, values, handleChange, validateOnBlur,
+        }) => (
+
           <Form className={classes.form}>
-            <span>Login</span>
-            <Field className={errors.login ? 'border-danger' : ''} name="login" />
-            {errors.login && touched.login ? (
-              <div className="text-danger">{errors.login}</div>
-            ) : null}
-            <span>Password</span>
-            <Field className={errors.password ? 'border-danger' : ''} name="password" type="password" />
-            {errors.password && touched.password ? <div className="text-danger">{errors.password}</div> : null}
-            <input title="Войти" type="submit" />
+            <FormGroup className="mb-3" controlId="formBasicEmail">
+              <FormLabel>Username</FormLabel>
+              <FormControl onBlur={handleBlur} value={values.username} onChange={handleChange} type="username" placeholder="Enter username" name="username" />
+              {(validateOnBlur && errors.username && touched.username) && (
+                <FormText className="text-danger">
+                  {errors.username}
+                </FormText>
+              )}
+
+            </FormGroup>
+
+            <FormGroup className="mb-3" controlId="formBasicPassword">
+              <FormLabel>Password</FormLabel>
+              <FormControl className={errors.password ? 'border-danger border-2' : ''} onBlur={handleBlur} value={values.password} onChange={handleChange} name="password" type="password" placeholder="Password" />
+              {(validateOnBlur && errors.password && touched.password) && (
+                <FormText className="text-danger">
+                  {errors.password}
+                </FormText>
+              )}
+            </FormGroup>
+            <Button variant="primary" type="submit">
+              Sign in
+            </Button>
+            {authError.active && (
+              <div className="text-danger text-center">
+                {authError.message}
+              </div>
+            )}
           </Form>
         )}
       </Formik>
