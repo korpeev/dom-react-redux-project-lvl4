@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { Formik, Field, Form } from 'formik';
+import React, { useEffect } from 'react';
+import { Formik, Form } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import {
   FormGroup, FormText, FormControl, FormLabel, Button,
 } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import classes from './style.module.scss';
 import { SignupSchema } from '../../utils/validationSchemas.js';
 import useAuth from '../../hooks/useAuth.js';
 import storage from '../../utils/storage.js';
+import { getAppState } from '../../selectors/index.js';
 
 function Login() {
-  const { onSubmit, error: authError } = useAuth();
+  const dispatch = useDispatch();
+  const { error: authError } = useSelector(getAppState);
+  const { onSubmit } = useAuth(dispatch);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -60,9 +64,9 @@ function Login() {
             <Button variant="primary" type="submit">
               Sign in
             </Button>
-            {authError.active && (
+            {authError.isActive && (
               <div className="text-danger text-center">
-                {authError.message}
+                {authError.text}
               </div>
             )}
           </Form>

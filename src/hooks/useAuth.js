@@ -1,24 +1,23 @@
 import axios from 'axios';
-import { useAppContext } from '../context/AppContext.jsx';
 import storage from '../utils/storage.js';
+import { setAuth, setError, setUserName } from '../store/slices/app.js';
 
-export default function useAuth() {
-  const { setLoggedIn, setError, error } = useAppContext();
-
+export default function useAuth(dispatch) {
   const onSubmit = async (userData) => {
     try {
       const { data } = await axios.post('/api/v1/login', userData);
       storage.set('token', data.token);
-      setLoggedIn(true);
+      console.log(userData.username);
+      dispatch(setUserName(userData.username));
+      dispatch(setAuth(true));
+      dispatch(setError({ text: '', isActive: false }));
     } catch (e) {
-      setError({
-        message: 'Invalid credentials',
-        active: true,
-      });
+      dispatch(setError({
+        text: 'invalid credentials',
+        isActive: true,
+      }));
     }
   };
 
-  return {
-    onSubmit, error,
-  };
+  return { onSubmit };
 }
