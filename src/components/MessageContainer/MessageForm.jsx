@@ -6,7 +6,7 @@ import { sendMessage } from '../../store/slices/message.js';
 import { useSocket } from '../../context/SocketContext.jsx';
 
 export default function MessageForm({ channelId, username }) {
-  const { socket } = useSocket();
+  const createEmit = useSocket();
   const dispatch = useDispatch();
   const messageRef = useRef(null);
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function MessageForm({ channelId, username }) {
             channelId,
             username,
           };
-          dispatch(sendMessage({ messageData, socket, resetForm }));
+          dispatch(sendMessage({ messageData, createEmit, resetForm }));
         }}
       >
         {() => (

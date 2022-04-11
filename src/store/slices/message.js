@@ -1,18 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-export const sendMessage = createAsyncThunk('message/sendMessage', async ({ messageData, socket, resetForm }) => {
+export const sendMessage = createAsyncThunk('message/sendMessage', async ({ messageData, createEmit, resetForm }) => {
   try {
-    await socket.emit('newMessage', {
-      data: {
-        attributes: {
-          messageData,
-        },
-      },
-    });
-
+    await createEmit('newMessage', { ...messageData });
     resetForm();
   } catch (e) {
-
   }
 });
 
@@ -26,20 +18,13 @@ const messageSlice = createSlice({
       state.messages.push(payload);
     },
     fetchedMessages: (state, { payload }) => {
-      console.log(payload);
-      const normalizedData = payload.map((d) => ({
-        text: d.data.attributes.messageData.text,
-        id: d.id,
-        channelId: d.data.attributes.messageData.channelId,
-        username: d.data.attributes.messageData.username,
-      })) || [];
-      state.messages.push(...normalizedData);
+      state.messages = payload;
     },
-    reset: (state) => {
-      state.messages = [];
+    removeMessages: (state, { payload }) => {
+      state.messages = state.messages.filter((m) => m.channelId !== payload);
     },
   },
 });
 
-export const { setMessages, reset, fetchedMessages } = messageSlice.actions;
+export const { setMessages, fetchedMessages, removeMessages } = messageSlice.actions;
 export default messageSlice.reducer;

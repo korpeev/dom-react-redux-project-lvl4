@@ -7,7 +7,7 @@ export default function useAuth(dispatch) {
     try {
       const { data } = await axios.post('/api/v1/login', userData);
       storage.set('token', data.token);
-      console.log(userData.username);
+      storage.set('username', userData.username);
       dispatch(setUserName(userData.username));
       dispatch(setAuth(true));
       dispatch(setError({ text: '', isActive: false }));

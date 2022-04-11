@@ -8,7 +8,6 @@ export default function MessageItem({ username, text }) {
         :
       </b>
       {text}
-
     </div>
   );
 }

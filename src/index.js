@@ -11,17 +11,9 @@ import { Provider } from 'react-redux';
 import io from 'socket.io-client';
 import { store } from './store/index.js';
 import App from './App.jsx';
-import { setMessages } from './store/slices/message.js';
 import SocketProvider from './context/SocketContext.jsx';
 
 const socket = io();
-socket.on('connect', () => {
-  console.log('Socket.io connected');
-});
-socket.on('newMessage', (response) => {
-  const { data: { attributes: { messageData } }, id } = response;
-  store.dispatch(setMessages({ ...messageData, id }));
-});
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }

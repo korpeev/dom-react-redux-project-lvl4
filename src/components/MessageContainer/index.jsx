@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import MessageForm from './MessageForm.jsx';
-import { reset } from '../../store/slices/message.js';
+
 import { selectActiveChannel, selectActiveChannelId, selectMessages } from '../../selectors/index.js';
 import MessageItem from './MessageItem.jsx';
 
@@ -9,11 +9,7 @@ export default function () {
   const channelTitle = useSelector(selectActiveChannel);
   const activeChannelId = useSelector(selectActiveChannelId);
   const username = useSelector((state) => state.app.username);
-  const { messages, messagesCount } = useSelector(selectMessages(activeChannelId));
-  const dispatch = useDispatch();
-  useEffect(() => () => {
-    dispatch(reset());
-  }, []);
+  const { messagesList, messagesCount } = useSelector(selectMessages(activeChannelId));
   return (
     <div className="col p-2 h-100">
       <div className="d-flex flex-column h-100">
@@ -32,7 +28,7 @@ export default function () {
 
         </div>
         <div className="overflow-auto flex-fill">
-          {messages.map((msg) => (
+          {messagesList.map((msg) => (
             <MessageItem key={msg.id} username={msg.username} text={msg.text} />
           ))}
         </div>

@@ -6,6 +6,7 @@ import NotFound from './pages/404Page/NotFound.jsx';
 import RequireAuth from './components/RequireAuth.jsx';
 import Home from './pages/Home.jsx';
 import Header from './components/Header.jsx';
+import Modals from './components/modals/index.jsx';
 
 function App() {
   const [isNotFoundPage, setNotFoundPage] = useState(false);
@@ -17,6 +18,7 @@ function App() {
         <Route path="*" element={<NotFound setNotFoundPage={setNotFoundPage} />} />
         <Route path="/" element={<RequireAuth><Home /></RequireAuth>} />
       </Routes>
+      <Modals />
     </div>
   );
 }
