@@ -23,9 +23,8 @@ module.exports = {
     historyApiFallback: true,
   },
   resolve: {
-    alias : {
-      '@': path.resolve(__dirname, './src')
-    }
+    extensions: ['.jsx', '.js'],
+    modules:  [path.resolve(__dirname, './src'), 'node_modules'],
   },
   plugins: [
     new MiniCssExtractPlugin(),
@@ -36,6 +35,16 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: 'babel-loader',
+      },
+      {
+        test: /\.(js)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
+        },
+        resolve: {
+          fullySpecified: false,
+        }
       },
       {
         test: /\.s[ac]ss$/i,

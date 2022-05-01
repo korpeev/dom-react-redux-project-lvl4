@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { Formik, Form } from 'formik';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   FormGroup, FormText, FormControl, FormLabel, Button,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { signInScheme } from 'utils/validationSchemas.js';
+import useAuth from 'hooks/useAuth.js';
+import { getAppState } from 'selectors/index.js';
+import storage from 'utils/storage.js';
 import classes from './style.module.scss';
-import { SignupSchema } from '../../utils/validationSchemas.js';
-import useAuth from '../../hooks/useAuth.js';
-import storage from '../../utils/storage.js';
-import { getAppState } from '../../selectors/index.js';
 
 function Login() {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ function Login() {
           username: '',
           password: '',
         }}
-        validationSchema={SignupSchema}
+        validationSchema={signInScheme}
         onSubmit={async (values) => {
           await onSubmit(values);
           navigate('/');
@@ -43,7 +43,7 @@ function Login() {
           <Form className={classes.form}>
             <FormGroup className="mb-3" controlId="formBasicEmail">
               <FormLabel>Username</FormLabel>
-              <FormControl onBlur={handleBlur} value={values.username} onChange={handleChange} type="username" placeholder="Enter username" name="username" />
+              <FormControl className={errors.username ? 'border-danger border-2' : ''} onBlur={handleBlur} value={values.username} onChange={handleChange} type="username" placeholder="Enter username" name="username" />
               {(validateOnBlur && errors.username && touched.username) && (
                 <FormText className="text-danger">
                   {errors.username}
@@ -69,9 +69,15 @@ function Login() {
                 {authError.text}
               </div>
             )}
+            <span className="text-center">
+              Нет Аккаунта?
+              <Link className="m-2" to="/signup">Регистрация</Link>
+            </span>
           </Form>
         )}
+
       </Formik>
+
     </div>
   );
 }

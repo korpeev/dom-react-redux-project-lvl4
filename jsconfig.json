@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "nodenext",
-    "baseUrl": "./src"
+    "baseUrl": "src"
   }
 }
 
