@@ -10,10 +10,11 @@ export default function useAuth(dispatch) {
       storage.set('username', userData.username);
       dispatch(setUserName(userData.username));
       dispatch(setAuth(true));
-      dispatch(setError({ text: '', isActive: false }));
+      dispatch(setError({ text: '', type: '', isActive: false }));
     } catch (e) {
       dispatch(setError({
         text: 'invalid credentials',
+        type: 'auth',
         isActive: true,
       }));
     }

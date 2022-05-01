@@ -3,7 +3,9 @@ import React, {
 } from 'react';
 import { useDispatch } from 'react-redux';
 import { removeMessages, setMessages } from '../store/slices/message.js';
-import { removeChannel, renameChannel, setChannels } from '../store/slices/channel.js';
+import {
+  removeChannel, renameChannel, setChannels, setCurrentChannelId,
+} from '../store/slices/channel.js';
 
 const SocketContext = createContext({
   createEmit: null,
@@ -29,6 +31,7 @@ export default function SocketProvider({ children, socket }) {
 
     socket.on('newChannel', (response) => {
       dispatch(setChannels([response]));
+      dispatch(setCurrentChannelId(response.id));
     });
 
     socket.on('removeChannel', (response) => {

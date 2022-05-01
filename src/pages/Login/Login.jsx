@@ -64,7 +64,7 @@ function Login() {
             <Button variant="primary" type="submit">
               Sign in
             </Button>
-            {authError.isActive && (
+            {(authError.isActive && authError.type === 'auth') && (
               <div className="text-danger text-center">
                 {authError.text}
               </div>

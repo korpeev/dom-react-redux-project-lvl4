@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, current } from '@reduxjs/toolkit';
 
 const initialState = {
   channels: [],
@@ -11,7 +11,9 @@ const channelSlice = createSlice({
   name: 'channel',
   initialState,
   reducers: {
-    setChannels: (state, action) => ({ ...state, channels: [...state.channels, ...action.payload] }),
+    setChannels: (state, action) => {
+      state.channels.push(...action.payload);
+    },
     renameChannel: (state, { payload }) => {
       const changedChannels = state.channels.map((c) => {
         if (c.id === payload.id) {

@@ -5,6 +5,7 @@ const initialState = {
   isAuth: false,
   error: {
     text: '',
+    type: '',
     isActive: false,
   },
   modal: {

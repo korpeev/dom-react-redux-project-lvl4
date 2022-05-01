@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { setModal } from '../../store/slices/app.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { setError, setModal } from '../../store/slices/app.js';
 
 function Add({
   handleClose, createEmit, isDisabled,
 }) {
   const dispatch = useDispatch();
+  const { channel: { channels }, app } = useSelector((state) => state);
   const [text, setText] = useState('');
-
+  const isUniqueText = channels.some((channel) => channel.name === text);
   const handleSubmit = async () => {
+    if (isUniqueText) {
+      dispatch(setError({ text: 'Такой канал существует', type: 'notUniqueText', isActive: true }));
+      return;
+    }
     dispatch(setModal({ status: 'pending' }));
     try {
       await createEmit('newChannel', { name: text });
@@ -30,7 +35,9 @@ function Add({
         <div className="d-flex flex-column align-items-center">
           <span>Напишите название канала!</span>
           <input className="flex-fill mt-2" type="text" value={text} onChange={handleChange} />
+          {(app.error.isActive && app.error.type === 'notUniqueText') && <span className="text-danger">{app.error.text}</span>}
         </div>
+
       </Modal.Body>
       <Modal.Footer>
         <Button disabled={isDisabled} variant="danger" onClick={handleClose}>
@@ -39,6 +46,7 @@ function Add({
         <Button disabled={isDisabled} variant="primary" onClick={handleSubmit}>
           Добавить
         </Button>
+
       </Modal.Footer>
     </>
   );
