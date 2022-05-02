@@ -3,6 +3,7 @@ import {
 } from 'react-bootstrap';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { selectActiveid } from '../../selectors/index.js';
 import { setCurrentChannelId, setSelectedChannelId } from '../../store/slices/channel.js';
 import { setModal } from '../../store/slices/app.js';
@@ -10,16 +11,16 @@ import { setModal } from '../../store/slices/app.js';
 function ChannelListItem({ name, id, removable }) {
   const dispatch = useDispatch();
   const isActive = useSelector(selectActiveid(id));
-
+  const { t } = useTranslation();
   const handleChangeChannel = () => dispatch(setCurrentChannelId(id));
   const channelDeleteModal = () => {
     dispatch(setSelectedChannelId(id));
-    dispatch(setModal({ type: 'delete', title: 'Удалить канал', active: 'true' }));
+    dispatch(setModal({ type: 'delete', title: t('channelPanel.removeChannel', { channelName: name }), active: 'true' }));
   };
 
   const channelRenameModal = () => {
     dispatch(setSelectedChannelId(id));
-    dispatch(setModal({ type: 'rename', title: 'Переимновать канал', active: 'true' }));
+    dispatch(setModal({ type: 'rename', title: t('channelPanel.renameChannel', { channelName: name }), active: 'true' }));
   };
   return (
     <li className="list-group-item py-2 px-0" style={{ border: 'none' }}>
@@ -29,8 +30,8 @@ function ChannelListItem({ name, id, removable }) {
           <div>
             <Dropdown.Toggle className="flex-fill h-100" split size="sm" variant="primary" id="dropdown-split-basic" />
             <Dropdown.Menu>
-              <Dropdown.Item onClick={channelRenameModal}>Rename</Dropdown.Item>
-              <Dropdown.Item onClick={channelDeleteModal}>Delete</Dropdown.Item>
+              <Dropdown.Item onClick={channelRenameModal}>{t('channelPanel.rename')}</Dropdown.Item>
+              <Dropdown.Item onClick={channelDeleteModal}>{t('channelPanel.remove')}</Dropdown.Item>
             </Dropdown.Menu>
           </div>
         )}

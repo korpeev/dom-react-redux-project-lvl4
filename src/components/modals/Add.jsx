@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { setError, setModal } from '../../store/slices/app.js';
 
 function Add({
@@ -10,9 +11,10 @@ function Add({
   const { channel: { channels }, app } = useSelector((state) => state);
   const [text, setText] = useState('');
   const isUniqueText = channels.some((channel) => channel.name === text);
+  const { t } = useTranslation();
   const handleSubmit = async () => {
     if (isUniqueText) {
-      dispatch(setError({ text: 'Такой канал существует', type: 'notUniqueText', isActive: true }));
+      dispatch(setError({ text: t('errors.channelExists'), type: 'notUniqueText', isActive: true }));
       return;
     }
     dispatch(setModal({ status: 'pending' }));
@@ -33,7 +35,7 @@ function Add({
     <>
       <Modal.Body>
         <div className="d-flex flex-column align-items-center">
-          <span>Напишите название канала!</span>
+          <span>{t('channelPanel.addChannelDescription')}</span>
           <input className="flex-fill mt-2" type="text" value={text} onChange={handleChange} />
           {(app.error.isActive && app.error.type === 'notUniqueText') && <span className="text-danger">{app.error.text}</span>}
         </div>

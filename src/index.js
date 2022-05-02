@@ -12,6 +12,8 @@ import io from 'socket.io-client';
 import { store } from './store/index.js';
 import App from './App.jsx';
 import SocketProvider from './context/SocketContext.jsx';
+import { I18nextProvider } from 'react-i18next'
+import i18next from 'services/i18n'
 
 const socket = io();
 if (process.env.NODE_ENV !== 'production') {
@@ -24,6 +26,7 @@ const root = createRoot(container);
 // eslint-disable-next-line react/jsx-filename-extension
 root.render(<BrowserRouter>
   <Provider store={store}>
+
     <SocketProvider socket={socket}><App /></SocketProvider>
   </Provider>
 </BrowserRouter>);

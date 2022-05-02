@@ -1,0 +1,32 @@
+{
+  "ru": {
+    "translation": {
+      "form": {
+        "username": "Имя пользователя",
+        "password": "Пароль",
+        "passwordConfirmation": "Повторите Пароль",
+        "signIn": "Войти",
+        "signOut": "Выйти",
+        "signUp": "Регистрация",
+        "notHaveAccount": "Нет Аккаунта?",
+        "haveAccount": "Есть Аккаунт?"
+      },
+      "channelPanel": {
+        "remove": "Удалить",
+        "add": "Добавить",
+        "rename": "Изменить",
+        "renameChannel": "Переминовать канал {{channelName}}",
+        "removeChannel": "Удалить канал {{channelName}}",
+        "addChannel": "Добавить канал",
+        "addChannelDescription": "Напишите название канала?"
+      },
+      "channels": "Каналы",
+      "errors": {
+        "channelExists": "Такой канал существует",
+        "invalidCredentials": "Неверные Данные",
+        "userExists": "Такой пользаватель существует",
+        "anyError": "Что-то пошло не так!"
+      }
+    }
+  }
+}

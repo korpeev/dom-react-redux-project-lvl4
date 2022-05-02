@@ -30,7 +30,6 @@ function Home() {
         <ChannelPanel />
         <MessageContainer />
       </div>
-
     </div>
   );
 }

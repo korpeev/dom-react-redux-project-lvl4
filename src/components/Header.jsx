@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Container, Navbar } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import storage from '../utils/storage.js';
 import { getAppState } from '../selectors/index.js';
 import { reset } from '../store/slices/app.js';
@@ -10,6 +11,7 @@ export default function Header() {
   const dispatch = useDispatch();
   const { isAuth } = useSelector(getAppState);
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const onSignOut = () => {
     storage.clear();
     dispatch(reset());
@@ -22,7 +24,7 @@ export default function Header() {
           React Chat
         </Navbar.Text>
         <Navbar.Collapse className="justify-content-end">
-          {isAuth && <Button onClick={onSignOut} variant="light">Sign Out</Button>}
+          {isAuth && <Button onClick={onSignOut} variant="light">{t('form.signOut')}</Button>}
         </Navbar.Collapse>
       </Container>
     </Navbar>

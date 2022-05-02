@@ -1,6 +1,7 @@
 import { Button, Modal } from 'react-bootstrap';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { setModal } from '../../store/slices/app.js';
 
 export default function ({
@@ -11,7 +12,7 @@ export default function ({
   const handleChange = (e) => {
     setText(e.target.value);
   };
-
+  const { t } = useTranslation();
   const handleSubmit = async () => {
     dispatch(setModal({ status: 'pending' }));
     try {
@@ -26,7 +27,12 @@ export default function ({
     <>
       <Modal.Body>
         <div className="d-flex flex-column align-items-center">
-          <span>Напишите название канала!</span>
+          <span>
+            {' '}
+            {t('channelPanel.renameChannel', { channelName: '' })}
+            {' '}
+            !
+          </span>
           <input className="flex-fill mt-2" type="text" value={text} onChange={handleChange} />
         </div>
       </Modal.Body>

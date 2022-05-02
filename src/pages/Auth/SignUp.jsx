@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useTransition } from 'react';
 import { Form, Formik } from 'formik';
 import { signUpScheme } from 'utils/validationSchemas';
 import {
@@ -7,14 +7,21 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import useAuth from 'hooks/useAuth';
 import { getAppState } from 'selectors/index';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import classes from './style.module.scss';
+import { setError } from '../../store/slices/app.js';
 
 function SignUp() {
   const { error: authError } = useSelector(getAppState);
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const { onSubmit } = useAuth(dispatch, '/api/v1/signup');
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  useEffect(() => {
+    dispatch(setError({ text: '', type: '', isActive: false }));
+  }, [pathname]);
   return (
     <div className={classes.formWrapper}>
       <Formik
@@ -36,14 +43,14 @@ function SignUp() {
 
           <Form className={classes.form}>
             <FormGroup className="mb-3" controlId="formBasicEmail">
-              <FormLabel>Username</FormLabel>
+              <FormLabel>{t('form.username')}</FormLabel>
               <FormControl
                 className={errors.username ? 'border-danger border-2' : ''}
                 onBlur={handleBlur}
                 value={values.username}
                 onChange={handleChange}
                 type="username"
-                placeholder="Enter username"
+                placeholder={t('form.username')}
                 name="username"
               />
               {(validateOnBlur && errors.username && touched.username) && (
@@ -55,7 +62,7 @@ function SignUp() {
             </FormGroup>
 
             <FormGroup className="mb-3" controlId="formBasicPassword">
-              <FormLabel>Password</FormLabel>
+              <FormLabel>{t('form.password')}</FormLabel>
               <FormControl
                 className={errors.password ? 'border-danger border-2' : ''}
                 onBlur={handleBlur}
@@ -63,7 +70,7 @@ function SignUp() {
                 onChange={handleChange}
                 name="password"
                 type="password"
-                placeholder="Password"
+                placeholder={t('form.password')}
               />
               {(validateOnBlur && errors.password && touched.password) && (
               <FormText className="text-danger">
@@ -73,14 +80,14 @@ function SignUp() {
             </FormGroup>
 
             <FormGroup className="mb-3" controlId="formBasicEmail">
-              <FormLabel>Password Confirmation</FormLabel>
+              <FormLabel>{t('form.passwordConfirmation')}</FormLabel>
               <FormControl
                 className={errors.passwordConfirmation ? 'border-danger border-2' : ''}
                 onBlur={handleBlur}
                 value={values.passwordConfirmation}
                 onChange={handleChange}
                 type="password"
-                placeholder="Enter Second Password"
+                placeholder={t('form.passwordConfirmation')}
                 name="passwordConfirmation"
               />
               {(validateOnBlur && errors.passwordConfirmation && touched.passwordConfirmation) && (
@@ -92,7 +99,7 @@ function SignUp() {
             </FormGroup>
 
             <Button variant="primary" type="submit">
-              Sign Up
+              {t('form.signUp')}
             </Button>
             {(authError.isActive && authError.type === 'auth') && (
             <div className="text-danger text-center">
@@ -100,8 +107,8 @@ function SignUp() {
             </div>
             )}
             <span className="text-center">
-              Есть Аккаунт?
-              <Link className="m-2" to="/login">Вход</Link>
+              {t('form.haveAccount')}
+              <Link className="m-2" to="/login">{t('form.signIn')}</Link>
             </span>
           </Form>
         )}
