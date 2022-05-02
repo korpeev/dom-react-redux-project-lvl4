@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import filter from 'leo-profanity';
 
+filter.getDictionary('ru');
 export const sendMessage = createAsyncThunk('message/sendMessage', async ({ messageData, createEmit, resetForm }) => {
   try {
     await createEmit('newMessage', { ...messageData });
@@ -15,7 +17,11 @@ const messageSlice = createSlice({
   },
   reducers: {
     setMessages: (state, { payload }) => {
-      state.messages.push(payload);
+      const messageData = {
+        ...payload,
+        text: filter.check(payload.text) ? filter.clean(payload.text, '*', 3) : payload.text,
+      };
+      state.messages.push(messageData);
     },
     fetchedMessages: (state, { payload }) => {
       state.messages = payload;
