@@ -2,7 +2,8 @@ import { Button, Modal } from 'react-bootstrap';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { setModal } from '../../store/slices/app.js';
+import { toastify } from 'services/toastify';
+import { setModal } from 'store/slices/app';
 
 export default function ({
   handleClose, isDisabled, selectedChannelId, createEmit,
@@ -14,6 +15,7 @@ export default function ({
     try {
       dispatch(setModal({ status: 'fulfilled' }));
       await createEmit('removeChannel', { id: selectedChannelId });
+      toastify(t('notify.channelRemoved'), 'error');
       handleClose();
     } catch (e) {
       console.log(e);

@@ -2,7 +2,7 @@
 
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
-
+import 'react-toastify/scss/main.scss'
 import '../assets/application.scss';
 import React from 'react';
 import { createRoot } from 'react-dom/client';

@@ -25,7 +25,13 @@
         "channelExists": "Такой канал существует",
         "invalidCredentials": "Неверные Данные",
         "userExists": "Такой пользаватель существует",
-        "anyError": "Что-то пошло не так!"
+        "anyError": "Что-то пошло не так!",
+        "channelNameNotBeEmpty": "Название канала не может быть пустым!"
+      },
+      "notify": {
+        "channelCreated": "Канал создан!",
+        "channelRemoved": "Канал удален!",
+        "channelRenamed": "Канал переименован"
       }
     }
   }

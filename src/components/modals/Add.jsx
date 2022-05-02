@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { setError, setModal } from '../../store/slices/app.js';
+import { toastify } from 'services/toastify';
+import { setError, setModal } from '../../store/slices/app';
 
 function Add({
   handleClose, createEmit, isDisabled,
@@ -13,14 +14,19 @@ function Add({
   const isUniqueText = channels.some((channel) => channel.name === text);
   const { t } = useTranslation();
   const handleSubmit = async () => {
+    if (!text.length) {
+      dispatch(setError({ text: t('errors.channelNameNotBeEmpty'), type: 'addChannelError', isActive: true }));
+      return;
+    }
     if (isUniqueText) {
-      dispatch(setError({ text: t('errors.channelExists'), type: 'notUniqueText', isActive: true }));
+      dispatch(setError({ text: t('errors.channelExists'), type: 'addChannelError', isActive: true }));
       return;
     }
     dispatch(setModal({ status: 'pending' }));
     try {
       await createEmit('newChannel', { name: text });
       dispatch(setModal({ status: 'fulfilled' }));
+      toastify('Канал создан!', 'success');
     } catch (e) {
       console.log(e);
     } finally {
@@ -37,7 +43,7 @@ function Add({
         <div className="d-flex flex-column align-items-center">
           <span>{t('channelPanel.addChannelDescription')}</span>
           <input className="flex-fill mt-2" type="text" value={text} onChange={handleChange} />
-          {(app.error.isActive && app.error.type === 'notUniqueText') && <span className="text-danger">{app.error.text}</span>}
+          {(app.error.isActive && app.error.type === 'addChannelError') && <span className="text-danger">{app.error.text}</span>}
         </div>
 
       </Modal.Body>
@@ -50,6 +56,7 @@ function Add({
         </Button>
 
       </Modal.Footer>
+
     </>
   );
 }

@@ -2,6 +2,7 @@ import { Button, Modal } from 'react-bootstrap';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toastify } from 'services/toastify';
 import { setModal } from '../../store/slices/app.js';
 
 export default function ({
@@ -15,12 +16,10 @@ export default function ({
   const { t } = useTranslation();
   const handleSubmit = async () => {
     dispatch(setModal({ status: 'pending' }));
-    try {
-      createEmit('renameChannel', { id: selectedChannelId, name: text });
-      dispatch(setModal({ status: 'fulfilled' }));
-      handleClose();
-    } catch (e) {
-    }
+    await createEmit('renameChannel', { id: selectedChannelId, name: text });
+    dispatch(setModal({ status: 'fulfilled' }));
+    handleClose();
+    toastify(t('notify.channelRenamed'));
   };
 
   return (
