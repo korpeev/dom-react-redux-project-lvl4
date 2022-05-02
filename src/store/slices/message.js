@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import filter from 'leo-profanity';
+import { filterBadWords } from 'services/filterBadWords.js';
 
-filter.getDictionary('ru');
 export const sendMessage = createAsyncThunk('message/sendMessage', async ({ messageData, createEmit, resetForm }) => {
   try {
     await createEmit('newMessage', { ...messageData });
@@ -17,14 +16,10 @@ const messageSlice = createSlice({
   },
   reducers: {
     setMessages: (state, { payload }) => {
-      const messageData = {
-        ...payload,
-        text: filter.check(payload.text) ? filter.clean(payload.text, '*', 3) : payload.text,
-      };
-      state.messages.push(messageData);
+      state.messages.push(filterBadWords(payload));
     },
     fetchedMessages: (state, { payload }) => {
-      state.messages = payload;
+      state.messages = filterBadWords(payload);
     },
     removeMessages: (state, { payload }) => {
       state.messages = state.messages.filter((m) => m.channelId !== payload);

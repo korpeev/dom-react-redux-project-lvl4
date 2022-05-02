@@ -1,7 +1,7 @@
 import {
   ButtonGroup, Dropdown, Button,
 } from 'react-bootstrap';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { selectActiveid } from '../../selectors/index.js';
@@ -17,7 +17,6 @@ function ChannelListItem({ name, id, removable }) {
     dispatch(setSelectedChannelId(id));
     dispatch(setModal({ type: 'delete', title: t('channelPanel.removeChannel', { channelName: name }), active: 'true' }));
   };
-
   const channelRenameModal = () => {
     dispatch(setSelectedChannelId(id));
     dispatch(setModal({ type: 'rename', title: t('channelPanel.renameChannel', { channelName: name }), active: 'true' }));

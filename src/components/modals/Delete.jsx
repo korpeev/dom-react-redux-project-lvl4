@@ -12,6 +12,7 @@ export default function ({
   const { t } = useTranslation();
   const handleSubmit = async () => {
     dispatch(setModal({ status: 'pending' }));
+    throw new Error('test');
     try {
       dispatch(setModal({ status: 'fulfilled' }));
       await createEmit('removeChannel', { id: selectedChannelId });
