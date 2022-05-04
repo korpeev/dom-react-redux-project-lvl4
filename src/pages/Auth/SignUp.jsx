@@ -35,9 +35,8 @@ function SignUp() {
         validationSchema={signUpScheme}
         onSubmit={async (values) => {
           await onSubmit(values);
-          console.log(location.pathname);
-          if (location.pathname !== '/signup') {
-            navigate('/');
+          if (!authError.isActive) {
+            navigate('/');:
           }
         }}
       >
