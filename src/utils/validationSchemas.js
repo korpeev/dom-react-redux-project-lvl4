@@ -2,12 +2,11 @@ import * as Yup from 'yup';
 
 export const signUpScheme = Yup.object().shape({
   username: Yup.string()
-    .min(6, 'validations.min')
+    .min(3, 'validations.min')
     .max(20, 'validations.max')
     .required('validations.required'),
   password: Yup.string()
     .min(6, 'validations.min')
-    .max(20, 'validations.max')
     .required('validations.required'),
   passwordConfirmation: Yup.string()
     .required('validations.required')
@@ -16,12 +15,11 @@ export const signUpScheme = Yup.object().shape({
 
 export const signInScheme = Yup.object().shape({
   username: Yup.string()
-    .min(6, 'validations.min')
+    .min(3, 'validations.min')
     .max(20, 'validations.max')
     .required('validations.required'),
   password: Yup.string()
     .min(6, 'validations.min')
-    .max(20, 'validations.max')
     .required('validations.required'),
 });
 
