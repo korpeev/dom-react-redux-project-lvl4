@@ -11,8 +11,9 @@
     "start": "fastify start server/plugin.js -l info -P -a 0.0.0.0"
   },
   "jest": {
-    "transform": {}
-  },
+    "transform": {},
+    "moduleFileExtensions": ["js", "json", "jsx", "ts", "tsx", "node"]
+},
   "repository": {
     "type": "git",
     "url": "git@github.com:korpeev/dom-react-redux-project-lvl4.git"
