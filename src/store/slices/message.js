@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { filterBadWords } from 'services/filterBadWords.js';
+import { filterBadWords } from '../../services/filterBadWords.js';
 
 export const sendMessage = createAsyncThunk('message/sendMessage', async ({ messageData, createEmit, resetForm }) => {
   try {

@@ -36,7 +36,7 @@ function SignUp() {
         onSubmit={async (values) => {
           await onSubmit(values);
           if (!authError.isActive) {
-            navigate('/');:
+            navigate('/');
           }
         }}
       >
