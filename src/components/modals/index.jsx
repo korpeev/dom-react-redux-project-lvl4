@@ -1,12 +1,12 @@
 import React, { useCallback, useMemo } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import Add from './Add.jsx';
-import { getAppState, getChannelState } from '../../selectors/index.js';
-import { setModal } from '../../store/slices/app.js';
-import { useSocket } from '../../context/SocketContext.jsx';
-import Delete from './Delete.jsx';
-import Rename from './Rename.jsx';
+import { getAppState, getChannelState } from 'selectors/index';
+import { setModal } from 'store/slices/app';
+import { useSocket } from 'context/SocketContext';
+import Add from './Add';
+import Delete from './Delete';
+import Rename from './Rename';
 
 const modals = {
   add: Add,
@@ -16,6 +16,7 @@ const modals = {
 export default function () {
   const createEmit = useSocket();
   const { modal } = useSelector(getAppState);
+  const { channel: { channels } } = useSelector((state) => state);
   const { selectedChannelId } = useSelector(getChannelState);
   const dispatch = useDispatch();
   const handleClose = () => {
@@ -36,6 +37,7 @@ export default function () {
         createEmit={createEmit}
         handleClose={handleClose}
         modal={modal}
+        channels={channels}
       />
     );
   }, [modal, selectedChannelId, createEmit]);

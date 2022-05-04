@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toastify } from 'services/toastify';
 import { setModal } from 'store/slices/app';
+import { errorBoundary } from '../../services/errorBoundary.js';
 
 export default function ({
   handleClose, isDisabled, selectedChannelId, createEmit,
@@ -12,14 +13,13 @@ export default function ({
   const { t } = useTranslation();
   const handleSubmit = async () => {
     dispatch(setModal({ status: 'pending' }));
-    throw new Error('test');
     try {
       dispatch(setModal({ status: 'fulfilled' }));
       await createEmit('removeChannel', { id: selectedChannelId });
       toastify(t('notify.channelRemoved'), 'error');
       handleClose();
     } catch (e) {
-      console.log(e);
+      toastify(t(errorBoundary(e.response.status)), 'error');
     }
   };
 

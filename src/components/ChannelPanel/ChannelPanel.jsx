@@ -2,9 +2,9 @@ import { Button, ListGroup } from 'react-bootstrap';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import ChannelListItem from './ChannelListItem.jsx';
-import { setModal } from '../../store/slices/app.js';
-import { getChannelState } from '../../selectors/index.js';
+import { setModal } from 'store/slices/app';
+import { getChannelState } from 'selectors/index';
+import ChannelListItem from './ChannelListItem';
 
 function ChannelPanel() {
   const { channels } = useSelector(getChannelState);

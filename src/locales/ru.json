@@ -1,13 +1,17 @@
 {
   "ru": {
     "translation": {
+      "main": {
+        "title": "Hexlet Chat"
+      },
       "form": {
-        "username": "Имя пользователя",
+        "username": "Ваш ник",
         "password": "Пароль",
-        "passwordConfirmation": "Повторите Пароль",
+        "passwordConfirmation": "Подтвердите пароль",
         "signIn": "Войти",
         "signOut": "Выйти",
-        "signUp": "Регистрация",
+        "signUp": "Зарегистрироваться",
+        "register": "Регистрация",
         "notHaveAccount": "Нет Аккаунта?",
         "haveAccount": "Есть Аккаунт?"
       },
@@ -22,16 +26,25 @@
       },
       "channels": "Каналы",
       "errors": {
-        "channelExists": "Такой канал существует",
-        "invalidCredentials": "Неверные Данные",
-        "userExists": "Такой пользаватель существует",
-        "anyError": "Что-то пошло не так!",
-        "channelNameNotBeEmpty": "Название канала не может быть пустым!"
+        "invalidCredentials": "Неверные имя пользователя или пароль",
+        "existUser": "Такой пользователь уже существует",
+        "networkError": "Ошибка соединения",
+        "socketReconnect": "Восстанавливается соединенние..."
       },
       "notify": {
         "channelCreated": "Канал создан!",
         "channelRemoved": "Канал удален!",
         "channelRenamed": "Канал переименован"
+      },
+      "validations": {
+        "required": "Обязательное поле",
+        "min": "Не менее 6 символов",
+        "max": "От 3 до 20 символов",
+        "passMustBeMatch": "Пароли должны совпадать",
+        "unique": "Должно быть уникальным"
+      },
+      "chat": {
+        "send": "Отправить"
       }
     }
   }

@@ -5,12 +5,12 @@ import {
   FormGroup, FormText, FormControl, FormLabel, Button,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { signInScheme } from 'utils/validationSchemas.js';
 import useAuth from 'hooks/useAuth.js';
 import { getAppState } from 'selectors/index.js';
 import storage from 'utils/storage.js';
 import { useTranslation } from 'react-i18next';
 import classes from './style.module.scss';
+import { signInScheme } from '../../utils/validationSchemas.js';
 
 function Login() {
   const { t } = useTranslation();
@@ -28,11 +28,11 @@ function Login() {
     <div className={classes.formWrapper}>
       <Formik
         validateOnBlur
+        validationSchema={signInScheme}
         initialValues={{
           username: '',
           password: '',
         }}
-        validationSchema={signInScheme}
         onSubmit={async (values) => {
           await onSubmit(values);
           navigate('/');
@@ -48,7 +48,7 @@ function Login() {
               <FormControl className={errors.username ? 'border-danger border-2' : ''} onBlur={handleBlur} value={values.username} onChange={handleChange} type="username" placeholder={t('form.username')} name="username" />
               {(validateOnBlur && errors.username && touched.username) && (
                 <FormText className="text-danger">
-                  {errors.username}
+                  {t(errors.username)}
                 </FormText>
               )}
 
@@ -59,21 +59,21 @@ function Login() {
               <FormControl className={errors.password ? 'border-danger border-2' : ''} onBlur={handleBlur} value={values.password} onChange={handleChange} name="password" type="password" placeholder={t('form.password')} />
               {(validateOnBlur && errors.password && touched.password) && (
                 <FormText className="text-danger">
-                  {errors.password}
+                  {t(errors.password)}
                 </FormText>
               )}
             </FormGroup>
-            <Button variant="primary" type="submit">
+            <Button disabled={errors?.username || errors?.password} variant="primary" type="submit">
               {t('form.signIn')}
             </Button>
             {(authError.isActive && authError.type === 'auth') && (
               <div className="text-danger text-center">
-                {authError.text}
+                {t(authError.text)}
               </div>
             )}
             <span className="text-center">
               {t('form.notHaveAccount')}
-              <Link className="m-2" to="/signup">{t('form.signUp')}</Link>
+              <Link className="m-2" to="/signup">{t('form.register')}</Link>
             </span>
           </Form>
         )}

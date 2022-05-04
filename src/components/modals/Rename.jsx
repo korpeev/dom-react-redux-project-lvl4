@@ -1,48 +1,77 @@
 import { Button, Modal } from 'react-bootstrap';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toastify } from 'services/toastify';
+import { Formik, Field, Form } from 'formik';
 import { setModal } from '../../store/slices/app.js';
+import { channel as channelScheme } from '../../utils/validationSchemas.js';
+import { errorBoundary } from '../../services/errorBoundary.js';
 
 export default function ({
-  createEmit, selectedChannelId, handleClose, isDisabled,
+  createEmit, selectedChannelId, handleClose, channels,
 }) {
-  const [text, setText] = useState('');
   const dispatch = useDispatch();
-  const handleChange = (e) => {
-    setText(e.target.value);
-  };
   const { t } = useTranslation();
-  const handleSubmit = async () => {
+  const handleSubmit = ({ text }, onSubmitProps) => {
+    onSubmitProps.setSubmitting(true);
     dispatch(setModal({ status: 'pending' }));
-    await createEmit('renameChannel', { id: selectedChannelId, name: text });
-    dispatch(setModal({ status: 'fulfilled' }));
-    handleClose();
-    toastify(t('notify.channelRenamed'));
+    try {
+      createEmit('renameChannel', { id: selectedChannelId, name: text });
+      dispatch(setModal({ status: 'fulfilled' }));
+      toastify(t('notify.channelRenamed'));
+    } catch (e) {
+      toastify(t(errorBoundary(e.response.code)), 'error');
+    } finally {
+      onSubmitProps.setSubmitting(false);
+      handleClose();
+    }
   };
 
   return (
-    <>
-      <Modal.Body>
-        <div className="d-flex flex-column align-items-center">
-          <span>
-            {' '}
-            {t('channelPanel.renameChannel', { channelName: '' })}
-            {' '}
-            !
-          </span>
-          <input className="flex-fill mt-2" type="text" value={text} onChange={handleChange} />
-        </div>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button disabled={isDisabled} variant="danger" onClick={handleClose}>
-          Закрыть
-        </Button>
-        <Button disabled={isDisabled} variant="primary" onClick={handleSubmit}>
-          Изменить
-        </Button>
-      </Modal.Footer>
-    </>
+    <Formik
+      initialValues={{
+        text: '',
+      }}
+      onSubmit={handleSubmit}
+      validationSchema={channelScheme(channels.map((channel) => channel.name))}
+      validateOnSubmit
+      validateOnChange
+    >
+      {({
+        errors,
+        handleChange,
+        values, isSubmitting,
+      }) => (
+        <Form>
+          <Modal.Body>
+            <Field name="text">
+              {() => (
+                <div className="d-flex flex-column align-items-center">
+                  <span>
+                    {' '}
+                    {t('channelPanel.renameChannel', { channelName: '' })}
+                    {' '}
+                    !
+                  </span>
+                  <input name="text" className={`flex-fill mt-2 form-control ${errors.text ? 'is-invalid' : ''}`} type="text" value={values.text} onChange={handleChange} />
+                  {errors.text && (
+                  <span className="invalid-tooltip">{t(errors.text)}</span>
+                  )}
+                </div>
+              )}
+            </Field>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button disabled={isSubmitting} variant="danger" onClick={handleClose}>
+              Закрыть
+            </Button>
+            <Button disabled={isSubmitting} variant="primary" type="submit">
+              Изменить
+            </Button>
+          </Modal.Footer>
+        </Form>
+      )}
+    </Formik>
   );
 }

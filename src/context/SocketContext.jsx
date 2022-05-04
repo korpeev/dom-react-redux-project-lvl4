@@ -2,10 +2,12 @@ import React, {
   createContext, useContext, useEffect,
 } from 'react';
 import { useDispatch } from 'react-redux';
-import { removeMessages, setMessages } from '../store/slices/message.js';
+import { removeMessages, setMessages } from 'store/slices/message';
 import {
   removeChannel, renameChannel, setChannels, setCurrentChannelId,
-} from '../store/slices/channel.js';
+} from 'store/slices/channel';
+import { toastify } from 'services/toastify';
+import { useTranslation } from 'react-i18next';
 
 const SocketContext = createContext({
   createEmit: null,
@@ -13,11 +15,12 @@ const SocketContext = createContext({
 
 export default function SocketProvider({ children, socket }) {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const createEmit = async (event, data) => {
     try {
       await socket.emit(event, data);
     } catch (e) {
-      console.log(e);
+      toastify(t('errors.networkError'));
     }
   };
 
@@ -42,6 +45,17 @@ export default function SocketProvider({ children, socket }) {
 
     socket.on('renameChannel', (response) => {
       dispatch(renameChannel(response));
+    });
+
+    socket.on('connect_failed', () => {
+      toastify(t('errors.networkError'), 'error');
+    });
+
+    socket.on('connect_error', () => {
+      setTimeout(() => {
+        toastify(t('errors.socketReconnect'), 'warning');
+        socket.connect();
+      }, 5000);
     });
   }, [socket]);
 

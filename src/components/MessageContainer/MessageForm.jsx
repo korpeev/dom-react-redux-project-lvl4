@@ -2,8 +2,8 @@ import { Formik, Form, Field } from 'formik';
 import { Button } from 'react-bootstrap';
 import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { sendMessage } from '../../store/slices/message.js';
-import { useSocket } from '../../context/SocketContext.jsx';
+import { sendMessage } from 'store/slices/message';
+import { useSocket } from 'context/SocketContext';
 
 export default function MessageForm({ channelId, username }) {
   const createEmit = useSocket();

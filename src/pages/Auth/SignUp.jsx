@@ -14,6 +14,7 @@ import { setError } from '../../store/slices/app.js';
 
 function SignUp() {
   const { error: authError } = useSelector(getAppState);
+  const location = useLocation();
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const { onSubmit } = useAuth(dispatch, '/api/v1/signup');
@@ -34,7 +35,10 @@ function SignUp() {
         validationSchema={signUpScheme}
         onSubmit={async (values) => {
           await onSubmit(values);
-          navigate('/');
+          console.log(location.pathname);
+          if (location.pathname !== '/signup') {
+            navigate('/');
+          }
         }}
       >
         {({
@@ -55,7 +59,7 @@ function SignUp() {
               />
               {(validateOnBlur && errors.username && touched.username) && (
               <FormText className="text-danger">
-                {errors.username}
+                {t(errors.username)}
               </FormText>
               )}
 
@@ -74,7 +78,7 @@ function SignUp() {
               />
               {(validateOnBlur && errors.password && touched.password) && (
               <FormText className="text-danger">
-                {errors.password}
+                {t(errors.password)}
               </FormText>
               )}
             </FormGroup>
@@ -92,18 +96,18 @@ function SignUp() {
               />
               {(validateOnBlur && errors.passwordConfirmation && touched.passwordConfirmation) && (
               <FormText className="text-danger">
-                {errors.passwordConfirmation}
+                {t(errors.passwordConfirmation)}
               </FormText>
               )}
 
             </FormGroup>
 
-            <Button variant="primary" type="submit">
+            <Button disabled={errors?.username || errors?.password || errors?.passwordConfirmation} variant="primary" type="submit">
               {t('form.signUp')}
             </Button>
             {(authError.isActive && authError.type === 'auth') && (
             <div className="text-danger text-center">
-              {authError.text}
+              {t(authError.text)}
             </div>
             )}
             <span className="text-center">
