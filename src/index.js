@@ -9,7 +9,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import io from 'socket.io-client';
-import { store } from 'store/index';
+import { store } from './store/index';
 import SocketProvider from 'context/SocketContext';
 import { Provider as RollBarProvider, ErrorBoundary, LEVEL_INFO } from '@rollbar/react';
 import i18next from 'i18next';
