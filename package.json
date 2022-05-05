@@ -11,11 +11,7 @@
     "start": "fastify start server/plugin.js -l info -P -a 0.0.0.0"
   },
   "jest": {
-    "transform": {},
-    "moduleFileExtensions": ["js", "jsx"],
-    "rootDir": "./",
-    "moduleDirectories": ["node_modules", "<rootDir>/src/"],
-    "modulePaths": ["node_modules", "<rootDir>/src/"]
+    "transform": {}
   },
   "repository": {
     "type": "git",

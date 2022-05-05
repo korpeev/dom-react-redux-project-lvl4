@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAppState, getChannelState } from 'selectors/index';
-import { setModal } from 'store/slices/app';
-import { useSocket } from 'context/SocketContext';
+import { getAppState, getChannelState } from '../../selectors/index';
+import { setModal } from '../../store/slices/app';
+import { useSocket } from '../../context/SocketContext';
 import Add from './Add';
 import Delete from './Delete';
 import Rename from './Rename';

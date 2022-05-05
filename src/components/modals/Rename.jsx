@@ -1,8 +1,8 @@
 import { Button, Modal } from 'react-bootstrap';
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React  from 'react';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { toastify } from 'services/toastify';
+import { toastify } from '../../services/toastify';
 import { Formik, Field, Form } from 'formik';
 import { setModal } from '../../store/slices/app.js';
 import { channel as channelScheme } from '../../utils/validationSchemas.js';

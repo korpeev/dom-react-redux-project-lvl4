@@ -5,9 +5,9 @@ import {
   FormGroup, FormText, FormControl, FormLabel, Button,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import useAuth from 'hooks/useAuth.js';
-import { getAppState } from 'selectors/index.js';
-import storage from 'utils/storage.js';
+import useAuth from '../../hooks/useAuth.js';
+import { getAppState } from '../../selectors/index.js';
+import storage from '../../utils/storage.js';
 import { useTranslation } from 'react-i18next';
 import classes from './style.module.scss';
 import { signInScheme } from '../../utils/validationSchemas.js';

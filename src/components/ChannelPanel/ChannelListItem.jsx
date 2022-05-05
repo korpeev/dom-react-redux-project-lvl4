@@ -4,9 +4,9 @@ import {
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { selectActiveid } from 'selectors/index';
-import { setCurrentChannelId, setSelectedChannelId } from 'store/slices/channel';
-import { setModal } from 'store/slices/app';
+import { selectActiveid } from '../../selectors/index';
+import { setCurrentChannelId, setSelectedChannelId } from '../../store/slices/channel';
+import { setModal } from '../../store/slices/app';
 
 function ChannelListItem({ name, id, removable }) {
   const dispatch = useDispatch();

@@ -2,8 +2,8 @@ import { Button, Modal } from 'react-bootstrap';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { toastify } from 'services/toastify';
-import { setModal } from 'store/slices/app';
+import { toastify } from '../../services/toastify';
+import { setModal } from '../../store/slices/app';
 import { errorBoundary } from '../../services/errorBoundary.js';
 
 export default function ({

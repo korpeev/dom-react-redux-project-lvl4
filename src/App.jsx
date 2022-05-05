@@ -1,13 +1,12 @@
 import React, { useState, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
-
+import { ToastContainer } from 'react-toastify';
 import {
   NotFound, Login, SignUp, Home,
-} from 'pages';
-import RequireAuth from 'components/RequireAuth';
-import Header from 'components/Header';
-import Modals from 'components/modals';
-import { ToastContainer } from 'react-toastify';
+} from './pages';
+import RequireAuth from './components/RequireAuth';
+import Header from './components/Header';
+import Modals from './components/modals';
 
 function App() {
   const [isNotFoundPage, setNotFoundPage] = useState(false);

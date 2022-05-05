@@ -2,11 +2,11 @@ import React, {
   createContext, useContext, useEffect,
 } from 'react';
 import { useDispatch } from 'react-redux';
-import { removeMessages, setMessages } from 'store/slices/message';
+import { removeMessages, setMessages } from '../store/slices/message';
 import {
   removeChannel, renameChannel, setChannels, setCurrentChannelId,
-} from 'store/slices/channel';
-import { toastify } from 'services/toastify';
+} from '../store/slices/channel';
+import { toastify } from '../services/toastify';
 import { useTranslation } from 'react-i18next';
 
 const SocketContext = createContext({
