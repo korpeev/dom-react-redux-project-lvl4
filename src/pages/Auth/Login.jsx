@@ -68,7 +68,7 @@ function Login() {
               {t(authError.text)}
             </div>
             )}
-            <Button disabled={errors?.username || errors?.password} variant="primary" type="submit">
+            <Button role="button" disabled={errors?.username || errors?.password} variant="primary" type="submit">
               {t('form.signIn')}
             </Button>
             <span className="text-center">
