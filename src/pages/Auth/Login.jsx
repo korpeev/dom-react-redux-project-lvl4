@@ -5,10 +5,10 @@ import {
   FormGroup, FormText, FormControl, FormLabel, Button,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import useAuth from '../../hooks/useAuth.js';
 import { getAppState } from '../../selectors/index.js';
 import storage from '../../utils/storage.js';
-import { useTranslation } from 'react-i18next';
 import classes from './style.module.scss';
 import { signInScheme } from '../../utils/validationSchemas.js';
 
@@ -63,14 +63,14 @@ function Login() {
                 </FormText>
               )}
             </FormGroup>
+            {(authError.isActive) && (
+            <div className="text-danger text-center">
+              {t(authError.text)}
+            </div>
+            )}
             <Button disabled={errors?.username || errors?.password} variant="primary" type="submit">
               {t('form.signIn')}
             </Button>
-            {(authError.isActive && authError.type === 'auth') && (
-              <div className="text-danger text-center">
-                {t(authError.text)}
-              </div>
-            )}
             <span className="text-center">
               {t('form.notHaveAccount')}
               <Link className="m-2" to="/signup">{t('form.register')}</Link>
