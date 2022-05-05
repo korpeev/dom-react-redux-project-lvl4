@@ -21,7 +21,7 @@ export default function Header() {
     <Navbar className="w-100 navbar-expand " expand bg="primary">
       <Container>
         <Navbar.Text className="text-white">
-          React Chat
+          {t('main.title')}
         </Navbar.Text>
         <Navbar.Collapse className="justify-content-end">
           {isAuth && <Button onClick={onSignOut} variant="light">{t('form.signOut')}</Button>}
