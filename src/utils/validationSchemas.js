@@ -19,7 +19,7 @@ export const signInScheme = Yup.object().shape({
     .max(20, 'validations.max')
     .required('validations.required'),
   password: Yup.string()
-    .min(6, 'validations.min')
+    .min(3, 'validations.min')
     .required('validations.required'),
 });
 

@@ -7,7 +7,7 @@
   "scripts": {
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
     "prebuild": "rm -rf dist",
-    "build": "webpack",
+    "build": "NODE_ENV=production npx webpack --mode production",
     "start": "fastify start server/plugin.js -l info -P -a 0.0.0.0"
   },
   "jest": {

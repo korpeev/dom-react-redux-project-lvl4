@@ -17,11 +17,11 @@ import { store } from './store/index';
 import App from './App';
 import resources from './locales/ru.json';
 
-const socket = io();
+
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
-
+const socket = io();
 const rollbarConfig = {
   accessToken: process.env.ROLLBAR_ACCESS_TOKEN,
   captureUncaught: true,
@@ -41,24 +41,20 @@ i18next.use(initReactI18next).init({
   },
 });
 
-const start = () => {
-  const container = document.getElementById('chat');
-  const root = createRoot(container);
+
+const container = document.getElementById('root');
+console.log(container)
+const root = createRoot(container);
 
 // eslint-disable-next-line react/jsx-filename-extension
-  root.render(
-      <RollBarProvider config={rollbarConfig}>
-        <ErrorBoundary level={LEVEL_INFO}>
-          <BrowserRouter>
-            <Provider store={store}>
-              <SocketProvider socket={socket}><App /></SocketProvider>
-            </Provider>
-          </BrowserRouter>
-        </ErrorBoundary>
-      </RollBarProvider>,
-  );
-}
-
-start()
-
-export default start()
+root.render(
+    <RollBarProvider config={rollbarConfig}>
+      <ErrorBoundary level={LEVEL_INFO}>
+        <BrowserRouter>
+          <Provider store={store}>
+            <SocketProvider socket={socket}><App /></SocketProvider>
+          </Provider>
+        </BrowserRouter>
+      </ErrorBoundary>
+    </RollBarProvider>,
+);
