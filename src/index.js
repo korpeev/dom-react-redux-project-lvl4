@@ -41,18 +41,24 @@ i18next.use(initReactI18next).init({
   },
 });
 
-const container = document.getElementById('chat');
-const root = createRoot(container);
+const start = () => {
+  const container = document.getElementById('chat');
+  const root = createRoot(container);
 
 // eslint-disable-next-line react/jsx-filename-extension
-root.render(
-  <RollBarProvider config={rollbarConfig}>
-    <ErrorBoundary level={LEVEL_INFO}>
-      <BrowserRouter>
-        <Provider store={store}>
-          <SocketProvider socket={socket}><App /></SocketProvider>
-        </Provider>
-      </BrowserRouter>
-    </ErrorBoundary>
-  </RollBarProvider>,
-);
+  root.render(
+      <RollBarProvider config={rollbarConfig}>
+        <ErrorBoundary level={LEVEL_INFO}>
+          <BrowserRouter>
+            <Provider store={store}>
+              <SocketProvider socket={socket}><App /></SocketProvider>
+            </Provider>
+          </BrowserRouter>
+        </ErrorBoundary>
+      </RollBarProvider>,
+  );
+}
+
+start()
+
+export default start()
