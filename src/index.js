@@ -42,21 +42,26 @@ i18next.use(initReactI18next).init({
 });
 
 
-const container = document.getElementById('root');
-if (container) {
-  const root = createRoot(container);
-  root.render(
-      <RollBarProvider config={rollbarConfig}>
-        <ErrorBoundary level={LEVEL_INFO}>
-          <BrowserRouter>
-            <Provider store={store}>
-              <SocketProvider socket={socket}><App /></SocketProvider>
-            </Provider>
-          </BrowserRouter>
-        </ErrorBoundary>
-      </RollBarProvider>,
-  );
+ const start = () => {
+  const container = document.getElementById('root');
+  if (container) {
+    const root = createRoot(container);
+    root.render(
+        <RollBarProvider config={rollbarConfig}>
+          <ErrorBoundary level={LEVEL_INFO}>
+            <BrowserRouter>
+              <Provider store={store}>
+                <SocketProvider socket={socket}><App /></SocketProvider>
+              </Provider>
+            </BrowserRouter>
+          </ErrorBoundary>
+        </RollBarProvider>,
+    );
+  }
 }
+
+start()
+export default start
 
 // eslint-disable-next-line react/jsx-filename-extension
 
