@@ -33,9 +33,8 @@ function Login() {
           username: '',
           password: '',
         }}
-        onSubmit={async (values) => {
-          await onSubmit(values);
-          navigate('/');
+        onSubmit={(values) => {
+          onSubmit(values, navigate);
         }}
       >
         {({
