@@ -6,6 +6,5 @@ export const toastify = (msg = '', type = 'success') => {
     warning: 'warning',
     error: 'error',
   };
-  console.log(getStateByType[type]);
   toast(msg, { type: getStateByType[type] });
 };

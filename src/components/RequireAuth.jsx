@@ -14,7 +14,6 @@ export default function RequireAuth({ children }) {
       dispatch(setAuth(true));
     }
   }, [isAuth]);
-  console.log(location.pathname);
   if (!isAuth) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
