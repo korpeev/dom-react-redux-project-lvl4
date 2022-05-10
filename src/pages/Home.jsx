@@ -7,7 +7,7 @@ import { setChannels, setCurrentChannelId } from '../store/slices/channel';
 import ChannelPanel from '../components/ChannelPanel/ChannelPanel';
 import { fetchedMessages } from '../store/slices/message';
 import MessageContainer from '../components/MessageContainer/index';
-import { setUserName } from '../store/slices/app';
+import { setUserName, reset } from '../store/slices/app';
 import { toastify } from '../services/toastify';
 
 function Home() {
@@ -25,6 +25,10 @@ function Home() {
       dispatch(setCurrentChannelId(data.currentChannelId));
       dispatch(fetchedMessages(data.messages));
     }).catch(() => toastify(t('errors.networkError'), 'error'));
+    return () => {
+      dispatch(reset());
+      storage.clear();
+    };
   }, []);
   return (
     <div className="container h-75 rounded shadow">

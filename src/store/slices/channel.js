@@ -12,7 +12,7 @@ const channelSlice = createSlice({
   initialState,
   reducers: {
     setChannels: (state, action) => {
-      state.channels.push(...action.payload);
+      state.channels = [...state.channels, ...action.payload];
     },
     renameChannel: (state, { payload }) => {
       const changedChannels = state.channels.map((c) => {

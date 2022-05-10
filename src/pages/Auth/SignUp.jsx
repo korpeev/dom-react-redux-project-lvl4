@@ -17,10 +17,9 @@ function SignUp() {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const { onSubmit } = useAuth(dispatch, '/api/v1/signup');
-  const navigate = useNavigate();
   const { t } = useTranslation();
   useEffect(() => {
-    dispatch(setError({ text: '', type: '', isActive: false }));
+    dispatch(setError({ text: '', isActive: false }));
   }, [pathname]);
   return (
     <div className={classes.formWrapper}>
@@ -32,14 +31,11 @@ function SignUp() {
           passwordConfirmation: '',
         }}
         validationSchema={signUpScheme}
-        onSubmit={(values) => {
-          onSubmit(values, navigate);
-        }}
+        onSubmit={onSubmit}
       >
         {({
           errors, touched, handleBlur, values, handleChange, validateOnBlur,
         }) => (
-
           <Form className={classes.form}>
             <FormGroup className="mb-3" controlId="formBasicEmail">
               <FormLabel>{t('form.username')}</FormLabel>
@@ -57,9 +53,7 @@ function SignUp() {
                 {t(errors.username)}
               </FormText>
               )}
-
             </FormGroup>
-
             <FormGroup className="mb-3" controlId="formBasicPassword">
               <FormLabel>{t('form.password')}</FormLabel>
               <FormControl
@@ -94,9 +88,7 @@ function SignUp() {
                 {t(errors.passwordConfirmation)}
               </FormText>
               )}
-
             </FormGroup>
-
             <Button
               disabled={errors?.username || errors?.password || errors?.passwordConfirmation}
               variant="primary"

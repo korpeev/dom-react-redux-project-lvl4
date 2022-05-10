@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Container, Navbar } from 'react-bootstrap';
-import {Link, useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import storage from '../utils/storage.js';
@@ -20,12 +20,12 @@ export default function Header() {
   return (
     <Navbar className="w-100 navbar-expand " expand bg="primary">
       <Container>
-        <Navbar.Text as={Link} to={'/'} className="text-white text-decoration-none">
+        <Navbar.Text as={Link} to="/" className="text-white text-decoration-none">
           {t('main.title')}
         </Navbar.Text>
-        <Navbar.Collapse className="justify-content-end">
+        <Navbar.Brand className="justify-content-end">
           {isAuth && <Button onClick={onSignOut} variant="light">{t('form.signOut')}</Button>}
-        </Navbar.Collapse>
+        </Navbar.Brand>
       </Container>
     </Navbar>
   );

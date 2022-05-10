@@ -5,7 +5,8 @@
         "title": "Hexlet Chat"
       },
       "form": {
-        "username": "Ваш ник",
+        "username": "Имя пользователя",
+        "nickname": "Ваш ник",
         "password": "Пароль",
         "passwordConfirmation": "Подтвердите пароль",
         "signIn": "Войти",

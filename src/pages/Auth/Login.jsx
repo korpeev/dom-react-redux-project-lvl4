@@ -11,6 +11,7 @@ import { getAppState } from '../../selectors/index.js';
 import storage from '../../utils/storage.js';
 import classes from './style.module.scss';
 import { signInScheme } from '../../utils/validationSchemas.js';
+import { setError } from '../../store/slices/app.js';
 
 function Login() {
   const { t } = useTranslation();
@@ -23,7 +24,8 @@ function Login() {
     if (storage.get('token')) {
       navigate('/');
     }
-  }, []);
+    dispatch(setError({ text: '', isActive: false }));
+  }, [dispatch]);
   return (
     <div className={classes.formWrapper}>
       <Formik
@@ -33,9 +35,7 @@ function Login() {
           username: '',
           password: '',
         }}
-        onSubmit={(values) => {
-          onSubmit(values, navigate);
-        }}
+        onSubmit={onSubmit}
       >
         {({
           errors, touched, handleBlur, values, handleChange, validateOnBlur,
@@ -43,16 +43,14 @@ function Login() {
 
           <Form className={classes.form}>
             <FormGroup className="mb-3" controlId="formBasicEmail">
-              <FormLabel>{t('form.username')}</FormLabel>
-              <FormControl className={errors.username ? 'border-danger border-2' : ''} onBlur={handleBlur} value={values.username} onChange={handleChange} type="username" placeholder={t('form.username')} name="username" />
+              <FormLabel>{t('form.nickname')}</FormLabel>
+              <FormControl className={errors.username ? 'border-danger border-2' : ''} onBlur={handleBlur} value={values.username} onChange={handleChange} type="username" placeholder={t('form.nickname')} name="username" />
               {(validateOnBlur && errors.username && touched.username) && (
                 <FormText className="text-danger">
                   {t(errors.username)}
                 </FormText>
               )}
-
             </FormGroup>
-
             <FormGroup className="mb-3" controlId="formBasicPassword">
               <FormLabel>{t('form.password')}</FormLabel>
               <FormControl className={errors.password ? 'border-danger border-2' : ''} onBlur={handleBlur} value={values.password} onChange={handleChange} name="password" type="password" placeholder={t('form.password')} />
