@@ -50,7 +50,7 @@ function Login() {
           validateOnBlur,
         }) => (
           <Form className={classes.form}>
-            <FormGroup className="mb-3" controlId="formLoginUsername">
+            <FormGroup className="mb-3" controlId="username">
               <FormLabel>{t('form.nickname')}</FormLabel>
               <FormControl
                 className={errors.username ? 'border-danger border-2' : ''}
@@ -67,7 +67,7 @@ function Login() {
                 </FormText>
               )}
             </FormGroup>
-            <FormGroup className="mb-3" controlId="formLoginPassword">
+            <FormGroup className="mb-3" controlId="password">
               <FormLabel>{t('form.password')}</FormLabel>
               <FormControl
                 className={errors.password ? 'border-danger border-2' : ''}
