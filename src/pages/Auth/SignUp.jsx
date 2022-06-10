@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
 import { Form, Formik } from 'formik';
 import {
-  Button, FormControl, FormGroup, FormLabel, FormText,
+  Button,
+  FormControl,
+  FormGroup,
+  FormLabel,
+  FormText,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -34,10 +38,15 @@ function SignUp() {
         onSubmit={onSubmit}
       >
         {({
-          errors, touched, handleBlur, values, handleChange, validateOnBlur,
+          errors,
+          touched,
+          handleBlur,
+          values,
+          handleChange,
+          validateOnBlur,
         }) => (
           <Form className={classes.form}>
-            <FormGroup className="mb-3" controlId="formBasicEmail">
+            <FormGroup className="mb-3" controlId="formRegisterUsername">
               <FormLabel>{t('form.username')}</FormLabel>
               <FormControl
                 className={errors.username ? 'border-danger border-2' : ''}
@@ -48,13 +57,13 @@ function SignUp() {
                 placeholder={t('form.username')}
                 name="username"
               />
-              {(validateOnBlur && errors.username && touched.username) && (
-              <FormText className="text-danger">
-                {t(errors.username)}
-              </FormText>
+              {validateOnBlur && errors.username && touched.username && (
+                <FormText className="text-danger">
+                  {t(errors.username)}
+                </FormText>
               )}
             </FormGroup>
-            <FormGroup className="mb-3" controlId="formBasicPassword">
+            <FormGroup className="mb-3" controlId="formRegisterPassword">
               <FormLabel>{t('form.password')}</FormLabel>
               <FormControl
                 className={errors.password ? 'border-danger border-2' : ''}
@@ -65,17 +74,19 @@ function SignUp() {
                 type="password"
                 placeholder={t('form.password')}
               />
-              {(validateOnBlur && errors.password && touched.password) && (
-              <FormText className="text-danger">
-                {t(errors.password)}
-              </FormText>
+              {validateOnBlur && errors.password && touched.password && (
+                <FormText className="text-danger">
+                  {t(errors.password)}
+                </FormText>
               )}
             </FormGroup>
 
             <FormGroup className="mb-3" controlId="formBasicEmail">
               <FormLabel>{t('form.passwordConfirmation')}</FormLabel>
               <FormControl
-                className={errors.passwordConfirmation ? 'border-danger border-2' : ''}
+                className={
+                  errors.passwordConfirmation ? 'border-danger border-2' : ''
+                }
                 onBlur={handleBlur}
                 value={values.passwordConfirmation}
                 onChange={handleChange}
@@ -83,27 +94,33 @@ function SignUp() {
                 placeholder={t('form.passwordConfirmation')}
                 name="passwordConfirmation"
               />
-              {(validateOnBlur && errors.passwordConfirmation && touched.passwordConfirmation) && (
-              <FormText className="text-danger">
-                {t(errors.passwordConfirmation)}
-              </FormText>
-              )}
+              {validateOnBlur &&
+                errors.passwordConfirmation &&
+                touched.passwordConfirmation && (
+                  <FormText className="text-danger">
+                    {t(errors.passwordConfirmation)}
+                  </FormText>
+                )}
             </FormGroup>
             <Button
-              disabled={errors?.username || errors?.password || errors?.passwordConfirmation}
+              disabled={
+                errors?.username ||
+                errors?.password ||
+                errors?.passwordConfirmation
+              }
               variant="primary"
               type="submit"
             >
               {t('form.signUp')}
             </Button>
-            {(authError.isActive) && (
-            <div className="text-danger text-center">
-              {t(authError.text)}
-            </div>
+            {authError.isActive && (
+              <div className="text-danger text-center">{t(authError.text)}</div>
             )}
             <span className="text-center">
               {t('form.haveAccount')}
-              <Link className="m-2" to="/login">{t('form.signIn')}</Link>
+              <Link className="m-2" to="/login">
+                {t('form.signIn')}
+              </Link>
             </span>
           </Form>
         )}

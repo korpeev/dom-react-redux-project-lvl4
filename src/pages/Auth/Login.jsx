@@ -2,7 +2,11 @@ import React, { useEffect } from 'react';
 import { Formik, Form } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import {
-  FormGroup, FormText, FormControl, FormLabel, Button,
+  FormGroup,
+  FormText,
+  FormControl,
+  FormLabel,
+  Button,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -38,45 +42,68 @@ function Login() {
         onSubmit={onSubmit}
       >
         {({
-          errors, touched, handleBlur, values, handleChange, validateOnBlur,
+          errors,
+          touched,
+          handleBlur,
+          values,
+          handleChange,
+          validateOnBlur,
         }) => (
-
           <Form className={classes.form}>
-            <FormGroup className="mb-3" controlId="formBasicEmail">
+            <FormGroup className="mb-3" controlId="formLoginUsername">
               <FormLabel>{t('form.nickname')}</FormLabel>
-              <FormControl className={errors.username ? 'border-danger border-2' : ''} onBlur={handleBlur} value={values.username} onChange={handleChange} type="username" placeholder={t('form.nickname')} name="username" />
-              {(validateOnBlur && errors.username && touched.username) && (
+              <FormControl
+                className={errors.username ? 'border-danger border-2' : ''}
+                onBlur={handleBlur}
+                value={values.username}
+                onChange={handleChange}
+                type="username"
+                placeholder={t('form.nickname')}
+                name="username"
+              />
+              {validateOnBlur && errors.username && touched.username && (
                 <FormText className="text-danger">
                   {t(errors.username)}
                 </FormText>
               )}
             </FormGroup>
-            <FormGroup className="mb-3" controlId="formBasicPassword">
+            <FormGroup className="mb-3" controlId="formLoginPassword">
               <FormLabel>{t('form.password')}</FormLabel>
-              <FormControl className={errors.password ? 'border-danger border-2' : ''} onBlur={handleBlur} value={values.password} onChange={handleChange} name="password" type="password" placeholder={t('form.password')} />
-              {(validateOnBlur && errors.password && touched.password) && (
+              <FormControl
+                className={errors.password ? 'border-danger border-2' : ''}
+                onBlur={handleBlur}
+                value={values.password}
+                onChange={handleChange}
+                name="password"
+                type="password"
+                placeholder={t('form.password')}
+              />
+              {validateOnBlur && errors.password && touched.password && (
                 <FormText className="text-danger">
                   {t(errors.password)}
                 </FormText>
               )}
             </FormGroup>
-            {(authError.isActive) && (
-            <div className="text-danger text-center">
-              {t(authError.text)}
-            </div>
+            {authError.isActive && (
+              <div className="text-danger text-center">{t(authError.text)}</div>
             )}
-            <Button role="button" disabled={errors?.username || errors?.password} variant="primary" type="submit">
+            <Button
+              role="button"
+              disabled={errors?.username || errors?.password}
+              variant="primary"
+              type="submit"
+            >
               {t('form.signIn')}
             </Button>
             <span className="text-center">
               {t('form.notHaveAccount')}
-              <Link className="m-2" to="/signup">{t('form.register')}</Link>
+              <Link className="m-2" to="/signup">
+                {t('form.register')}
+              </Link>
             </span>
           </Form>
         )}
-
       </Formik>
-
     </div>
   );
 }
