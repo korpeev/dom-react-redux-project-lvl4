@@ -21,7 +21,7 @@ function Login() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { error: authError } = useSelector(getAppState);
-  const { onSubmit } = useAuth(dispatch);
+  const { onSubmit, submitting } = useAuth(dispatch);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -89,7 +89,7 @@ function Login() {
             )}
             <Button
               role="button"
-              disabled={errors?.username || errors?.password}
+              disabled={submitting}
               variant="primary"
               type="submit"
             >

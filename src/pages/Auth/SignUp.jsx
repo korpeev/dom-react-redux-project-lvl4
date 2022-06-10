@@ -8,7 +8,7 @@ import {
   FormText,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import useAuth from '../../hooks/useAuth';
 import { getAppState } from '../../selectors/index';
@@ -20,7 +20,7 @@ function SignUp() {
   const { error: authError } = useSelector(getAppState);
   const dispatch = useDispatch();
   const { pathname } = useLocation();
-  const { onSubmit } = useAuth(dispatch, '/api/v1/signup');
+  const { onSubmit, submitting } = useAuth(dispatch, '/api/v1/signup');
   const { t } = useTranslation();
   useEffect(() => {
     dispatch(setError({ text: '', isActive: false }));
@@ -102,15 +102,7 @@ function SignUp() {
                   </FormText>
                 )}
             </FormGroup>
-            <Button
-              disabled={
-                errors?.username ||
-                errors?.password ||
-                errors?.passwordConfirmation
-              }
-              variant="primary"
-              type="submit"
-            >
+            <Button disabled={submitting} variant="primary" type="submit">
               {t('form.signUp')}
             </Button>
             {authError.isActive && (
